@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  node-build-monitor:
+    restart: unless-stopped
+    build: .
+    environment:
+      NODE_ENV: production
+    volumes:
+      - ./config.json:/app/app/config.json
+    ports:
+      - 3030:3000

@@ -3,4 +3,5 @@ node_modules/
 log.txt
 .idea/
 /package-lock.json
-/npm-debug.log
+/npm-debug.logconfig.json
+config.json

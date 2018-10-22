@@ -1,17 +1,17 @@
-FROM node:7.7.3-slim
+FROM node:10-alpine
 
 RUN npm install -g forever
 
-WORKDIR /build-mon
+WORKDIR /app
 
-ADD package.json /build-mon/package.json
+ADD package.json /app/package.json
 RUN npm install
 
-ADD app /build-mon/app
-ADD README.md /build-mon/README.md
+ADD app /app/app
+ADD README.md /app/README.md
 
-ONBUILD ADD config.json /build-mon/app/config.json
+ONBUILD ADD config.json /app/app/config.json
 
 EXPOSE 3000
 
-CMD [ "forever","--watch", "--watchDirectory", "/build-mon/app", "/build-mon/app/app.js"]
+CMD [ "forever","--watch", "--watchDirectory", "/app/app", "/app/app/app.js"]
