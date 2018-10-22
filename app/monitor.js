@@ -171,6 +171,20 @@ module.exports = function () {
                     if (shouldOnlyTakeLatestBuild(self.configuration, plugin.configuration)) {
                         sortBuildsByDate(pluginBuilds);
                         Array.prototype.push.apply(allBuilds, [pluginBuilds.shift()]);
+                    } else if(self.configuration.latestProjectBuildOnly) {
+                        sortBuildsByDate(pluginBuilds);
+                        const addedProjects = []
+                        Array.prototype.push.apply(allBuilds, pluginBuilds.filter((build, index) => {
+                            if (addedProjects.includes(build.project)) {
+                                log('skip build #' + build.number + ' ' + build.project, self.configuration.debug)
+                                return false
+                            }
+
+                            log('add build #' + build.number + ' ' + build.project, self.configuration.debug)
+                            addedProjects.push(build.project)
+                            return true
+                        }));
+
                     } else {
                         Array.prototype.push.apply(allBuilds, pluginBuilds);
                     }
